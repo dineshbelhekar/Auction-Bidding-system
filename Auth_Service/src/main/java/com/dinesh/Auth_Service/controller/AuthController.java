@@ -1,6 +1,7 @@
 package com.dinesh.Auth_Service.controller;
 
 import com.dinesh.Auth_Service.Entity.User;
+import com.dinesh.Auth_Service.request.LoginRequestDTO;
 import com.dinesh.Auth_Service.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,16 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody User user){
-        authService.signUp(user);
-        return new ResponseEntity<>("signuped successfully" , HttpStatus.OK);
+    public ResponseEntity<HttpStatus> signUp(@RequestBody User user){
+        authService.saveNewUser(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(
+            @RequestBody LoginRequestDTO loginRequestDTO) {
+        String token = authService.login(loginRequestDTO);
+        return ResponseEntity.ok(token);
     }
 
 }
