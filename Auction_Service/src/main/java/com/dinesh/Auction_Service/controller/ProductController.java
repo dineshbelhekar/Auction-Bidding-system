@@ -23,15 +23,15 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@RequestParam int id){
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
         productService.deleteProduct(id);
         return new ResponseEntity<>("product deleted successfully",HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<String> getById(@RequestParam int id){
-        productService.getById(id);
-        return new ResponseEntity<>("Product found",HttpStatus.FOUND);
+    public ResponseEntity<Product> getById(@PathVariable int id){
+        Product product = productService.getById(id);
+        return new ResponseEntity<>(product,HttpStatus.FOUND);
     }
 
 
