@@ -19,7 +19,7 @@ public class Product {
     private Integer id;
 
     @Column(nullable = false)
-    private String sellerId;
+    private Integer sellerId;
 
     private String description;
 
@@ -36,5 +36,8 @@ public class Product {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private Auctions auction;
 
 }
