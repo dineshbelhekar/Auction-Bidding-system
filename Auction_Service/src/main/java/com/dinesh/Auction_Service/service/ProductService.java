@@ -24,8 +24,9 @@ public class ProductService {
                     .getContext()
                     .getAuthentication();
 
-            product.setSellerId((String) auth.getPrincipal());
-
+            String id = (String) auth.getPrincipal();
+            product.setSellerId(Integer.parseInt(id));
+            System.out.println(id);
             productRepository.save(product);
 
         } catch (Exception e) {
@@ -42,11 +43,10 @@ public class ProductService {
         }
     }
 
-    public void getById(int id) {
-        try {
-            productRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new ProductException("unable to found the product");
-        }
+    public Product getById(int id) {
+        return productRepository.findById(id)
+                .orElseThrow(() ->
+                        new ProductException("Product Not found")
+                );
     }
 }
